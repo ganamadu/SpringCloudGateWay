@@ -1,0 +1,42 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: employeeModule
+          uri: http://localhost:8080/
+          predicates: 
+            - Path=/emp/**
+        - id: departmentModule
+          uri: http://localhost:8085/
+          predicates:
+            - Path=/dept/**
+        - id: studKafkaProducerModule
+          uri: http://localhost:9090/
+          predicates: 
+            - Path=/kafkaprod/stud/**
+        - id: studKafkaConsumerModule
+          uri: http://localhost:9095/
+          predicates: 
+            - Path=/kafkaconsum/stud/**  
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true   
+  service-url:
+    defaultzone: http://localhost:8761/eureka/
+    
+#jwt:
+#  secret: srilatha
+#springbootwebfluxjjwt:
+#  password:
+#    encoder:
+#      secret: mysecret
+#      iteration: 33
+#      keylength: 256
